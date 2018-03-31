@@ -26,6 +26,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    //external library for icon
+    compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     //design support library for coordinator layout
     compile "com.android.support:design:27.1.0"
 }
