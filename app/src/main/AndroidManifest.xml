@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Map.MapActivity"></activity>
+        <activity android:name=".Share.ShareActivity"></activity>
+        <activity android:name=".Fav.FavActivity"></activity>
+        <activity android:name=".Profile.ProfileActivity"></activity>
     </application>
 
 </manifest>
