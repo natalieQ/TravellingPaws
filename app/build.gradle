@@ -30,4 +30,6 @@ dependencies {
     compile "com.android.support:design:27.1.0"
     //external library for icon
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    //circle image view
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
