@@ -1,4 +1,4 @@
-package com.nailiqi.travellingpaws.Home;
+package com.nailiqi.travellingpaws.Utils;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

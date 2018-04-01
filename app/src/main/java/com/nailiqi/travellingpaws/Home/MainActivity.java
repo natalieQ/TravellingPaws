@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
+import com.nailiqi.travellingpaws.Utils.PartPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

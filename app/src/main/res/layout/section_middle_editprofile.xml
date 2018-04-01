@@ -1,0 +1,119 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="20dp">
+
+            <!--profile image-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/profilePic"
+                android:layout_marginTop="20dp"
+                app:civ_border_color="@color/babyblue"
+                app:civ_border_width="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textviewChangeProfilePic"
+                android:layout_below="@+id/profilePic"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:text="Change Photo"
+                android:textColor="@color/black"
+                android:textSize="16dp"/>
+
+            <!--profile name-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/relLayout1"
+                android:layout_below="@+id/textviewChangeProfilePic"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/grey_border_bottom">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_profile"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/username"
+                    android:hint="username"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="35dp"
+                    android:background="@null"/>
+
+            </RelativeLayout>
+
+            <!--pet's name-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/relLayout2"
+                android:layout_below="@+id/relLayout1"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/grey_border_bottom">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_paw"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/petname"
+                    android:hint="pet's name"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="35dp"
+                    android:background="@null"/>
+
+            </RelativeLayout>
+
+            <!--profile description-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/relLayout3"
+                android:layout_below="@+id/relLayout2"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/grey_border_bottom">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_detail"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/description"
+                    android:hint="description"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="35dp"
+                    android:background="@null"/>
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</merge>

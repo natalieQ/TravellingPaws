@@ -14,24 +14,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Naili Qi"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginStart="14dp"
-                    android:id="@+id/profileNameTextView"/>
-                
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="10dp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/profileMenu"
-                    android:src="@drawable/ic_account"/>
+                    android:id="@+id/goback"
+                    android:src="@drawable/ic_backarrow"/>
+
+                <TextView
+                    android:layout_toRightOf="@+id/goback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Options"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/profileNameTextView"/>
+
+
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
