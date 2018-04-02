@@ -53,7 +53,7 @@
                     android:id="@+id/username"
                     android:hint="username"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="40dp"
                     android:background="@null"/>
 
             </RelativeLayout>
@@ -79,7 +79,7 @@
                     android:id="@+id/petname"
                     android:hint="pet's name"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="40dp"
                     android:background="@null"/>
 
             </RelativeLayout>
@@ -105,7 +105,7 @@
                     android:id="@+id/description"
                     android:hint="description"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="40dp"
                     android:background="@null"/>
 
             </RelativeLayout>

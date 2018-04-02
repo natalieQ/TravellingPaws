@@ -1,5 +1,6 @@
 package com.nailiqi.travellingpaws.Home;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,17 +12,22 @@ import android.view.MenuItem;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
+import com.nailiqi.travellingpaws.Utils.ImageLoaderHelper;
 import com.nailiqi.travellingpaws.Utils.PartPagerAdapter;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int ACTIVITY_NUM = 0;
+    private Context context = MainActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initImageLoader();
 
         setupBottomNavbar();
         setupViewPager();
@@ -69,5 +75,10 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
+    }
+
+    private void initImageLoader(){
+        ImageLoaderHelper imageLoaderHelper = new ImageLoaderHelper(context);
+        ImageLoader.getInstance().init(imageLoaderHelper.getConfig());
     }
 }

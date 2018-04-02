@@ -1,11 +1,14 @@
 package com.nailiqi.travellingpaws.Profile;
 
+import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +16,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.nailiqi.travellingpaws.Home.MainActivity;
 import com.nailiqi.travellingpaws.R;
+import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
 import com.nailiqi.travellingpaws.Utils.PartStatePagerAdapter;
 
 import java.util.ArrayList;
@@ -22,6 +28,8 @@ import java.util.List;
 public class AccountSettingActivity extends AppCompatActivity{
 
     private static final String TAG = "AccountSettingActivity";
+    private static final int ACTIVITY_NUM = 4;
+    private Context context = AccountSettingActivity.this;
     private PartStatePagerAdapter partStatePagerAdapter;
     private ViewPager viewPager;
     private RelativeLayout relativeLayout;
@@ -36,6 +44,7 @@ public class AccountSettingActivity extends AppCompatActivity{
         relativeLayout = (RelativeLayout) findViewById(R.id.relLayout1);
 
         setupAccountSettingList();
+        setupBottomNavbar();
         setupBackArrow();
         setupFragments();
     }
@@ -83,6 +92,22 @@ public class AccountSettingActivity extends AppCompatActivity{
         //show fragment layout
         viewPager.setAdapter(partStatePagerAdapter);
         viewPager.setCurrentItem(fragmentnum);
+    }
+
+    /**
+     * Bottom navbar setup
+     */
+    private void setupBottomNavbar() {
+        Log.d(TAG, "setupBottomNavbar: Setting up Bottom navigation bar");
+        BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavbar);
+        //helper function to set up nav bar
+        BottomNavbarHelper.setupBottomNavbar(bottomNavigationViewEx);
+        //helper function to enable navigation
+        BottomNavbarHelper.enableNavigation(context, bottomNavigationViewEx );
+
+        Menu menu = bottomNavigationViewEx.getMenu();
+        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
+        menuItem.setChecked(true);
     }
 
     /**
