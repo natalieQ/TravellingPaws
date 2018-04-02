@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * checks to see if the @param 'user' is logged in
+     * checks to see if user is logged in
      */
     private void checkCurrentUser(FirebaseUser user){
         Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        FirebaseUser user = mAuth.getCurrentUser();
+        checkCurrentUser(user);
     }
 
     @Override
