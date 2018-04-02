@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nailiqi.travellingpaws.Home.MainActivity;
 import com.nailiqi.travellingpaws.R;
 
 public class SigninActivity extends AppCompatActivity{
@@ -27,6 +28,7 @@ public class SigninActivity extends AppCompatActivity{
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     private Context context = SigninActivity.this;
     private ProgressBar progressBar;
@@ -125,6 +127,11 @@ public class SigninActivity extends AppCompatActivity{
                                         Toast.makeText(SigninActivity.this, getString(R.string.auth_success),
                                                 Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);
+
+                                        //redirect to home page
+                                        Intent intent = new Intent(SigninActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
 
                                     // ...
@@ -134,6 +141,24 @@ public class SigninActivity extends AppCompatActivity{
 
             }
         });
+
+        TextView textViewRegister = (TextView) findViewById(R.id.textview_register);
+        textViewRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: go to register screen");
+                Intent intent = new Intent(SigninActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        //navigate to home, if user successfully sign in
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(SigninActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
     }
 

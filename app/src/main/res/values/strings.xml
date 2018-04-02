@@ -7,4 +7,7 @@
     <!-- Firebase messages -->
     <string name="auth_failed">Authenticate Failed</string>
     <string name="auth_success">Authentication Success</string>
+    <string name="dbname_users">users</string>
+    <string name="dbname_user_account">user_account</string>
+
 </resources>

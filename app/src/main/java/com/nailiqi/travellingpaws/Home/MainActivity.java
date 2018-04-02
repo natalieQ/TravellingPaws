@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         setupBottomNavbar();
         setupViewPager();
+
+        //mAuth.signOut();
     }
 
     /**
