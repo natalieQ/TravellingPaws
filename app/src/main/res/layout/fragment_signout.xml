@@ -3,12 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Out Fragment"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:textSize="18sp"/>
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Are you sure to sign out"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:id="@+id/textviewConfirmSignout"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textviewConfirmSignout"
+            android:id="@+id/btn_signout"
+            android:text="SIGN OUT"
+            android:textSize="14sp"
+            android:textColor="@color/babyblue"
+            android:layout_marginTop="20dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/blue_border"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
