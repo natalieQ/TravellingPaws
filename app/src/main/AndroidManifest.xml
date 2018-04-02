@@ -23,6 +23,8 @@
         <activity android:name=".Fav.FavActivity"></activity>
         <activity android:name=".Profile.ProfileActivity"></activity>
         <activity android:name=".Profile.AccountSettingActivity"></activity>
+        <activity android:name=".Signin.SigninActivity"></activity>
+        <activity android:name=".Signin.RegisterActivity"></activity>
     </application>
 
 </manifest>

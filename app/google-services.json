@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "731278102392",
+    "firebase_url": "https://travellingpaws-5adcb.firebaseio.com",
+    "project_id": "travellingpaws-5adcb",
+    "storage_bucket": "travellingpaws-5adcb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731278102392:android:5f51ebcad6c87b6d",
+        "android_client_info": {
+          "package_name": "com.nailiqi.travellingpaws"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731278102392-aajgh4ils4a8m9k7kraph4keehem4iop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nailiqi.travellingpaws",
+            "certificate_hash": "e766a8c277a3c7767c208cab7cfd3583d2f3e664"
+          }
+        },
+        {
+          "client_id": "731278102392-crkqe9l911h4vq1ahecc7eod0bs8fvfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuOx1wsXxNr03cxwg2DF-B6qkNreKBTHo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731278102392-crkqe9l911h4vq1ahecc7eod0bs8fvfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
