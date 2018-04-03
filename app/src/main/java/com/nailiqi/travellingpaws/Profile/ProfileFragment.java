@@ -16,10 +16,24 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nailiqi.travellingpaws.R;
+import com.nailiqi.travellingpaws.Signin.SigninActivity;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
+import com.nailiqi.travellingpaws.Utils.FirebaseMethods;
+import com.nailiqi.travellingpaws.Utils.ImageLoaderHelper;
+import com.nailiqi.travellingpaws.models.User;
+import com.nailiqi.travellingpaws.models.UserAccount;
+import com.nailiqi.travellingpaws.models.UserCombine;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,6 +48,14 @@ public class ProfileFragment extends Fragment{
     private Toolbar toolbar;
     private ImageView profileMenu;
     private BottomNavigationViewEx bottomNavigationViewEx;
+    private TextView mUsername, mDescription, mPetname, mPosts, mFollowers, mFollowing, mProfilebarUsername;
+
+    //firebase
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference dbRef;
+    private FirebaseMethods firebaseMethods;
 
     @Nullable
     @Override
@@ -47,12 +69,43 @@ public class ProfileFragment extends Fragment{
         toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
         profileMenu = (ImageView) view.findViewById(R.id.profileMenu);
         bottomNavigationViewEx = (BottomNavigationViewEx) view.findViewById(R.id.bottomNavbar);
+        mUsername = (TextView) view.findViewById(R.id.username);
+        mDescription = (TextView) view.findViewById(R.id.description);
+        mPetname = (TextView) view.findViewById(R.id.petname);
+        mPosts = (TextView) view.findViewById(R.id.tvPost);
+        mFollowers = (TextView) view.findViewById(R.id.tvFollower);
+        mFollowing = (TextView) view.findViewById(R.id.tvFollowing);
+        mProfilebarUsername = (TextView) view.findViewById(R.id.profilebar_username);
         context = getActivity();
+        firebaseMethods = new FirebaseMethods(getActivity());
 
         setupTopToolbar();
         setupBottomNavbar();
+        setupFirebaseAuth();
 
         return view;
+    }
+
+    /**
+     * setup widgets
+     */
+    private void setupWidgets(UserCombine userCombine){
+
+        User user = userCombine.getUser();
+        UserAccount account = userCombine.getUserAccount();
+
+        //set profile image
+        ImageLoaderHelper.setImage(account.getProfile_image(), profileImage, null, "");
+
+        //set profile textview
+        mUsername.setText(account.getUsername());
+        mDescription.setText(account.getDescription());
+        mPetname.setText(account.getPetname());
+        mPosts.setText(String.valueOf(account.getPosts()));
+        mFollowers.setText(String.valueOf((account.getFollowers())));
+        mFollowing.setText(String.valueOf(account.getFollowing()));
+        mProfilebarUsername.setText(account.getUsername());
+
     }
 
     /**
@@ -90,6 +143,68 @@ public class ProfileFragment extends Fragment{
             }
         });
     }
+
+
+    /**
+     * Setup the firebase auth
+     */
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
+
+        mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dbRef = firebaseDatabase.getReference();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
+        //database ref listener
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: getting UserCombine");
+
+                //get user_account + users info from database
+                setupWidgets(firebaseMethods.getUserCombine(dataSnapshot));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+
 
 
 }

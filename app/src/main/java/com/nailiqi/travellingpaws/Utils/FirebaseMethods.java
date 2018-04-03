@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.models.User;
 import com.nailiqi.travellingpaws.models.UserAccount;
+import com.nailiqi.travellingpaws.models.UserCombine;
 
 
 public class FirebaseMethods {
@@ -88,7 +89,7 @@ public class FirebaseMethods {
         return false;
     }
 
-    public void addNewUser(String email, String username, String description, String profile_image){
+    public void addNewUser(String email, String username, String description, String profile_image, String petname){
 
         User user = new User( userID, email, username );
 
@@ -103,12 +104,64 @@ public class FirebaseMethods {
                 0,
                 0,
                 profile_image,
-                username
+                username,
+                petname
         );
 
         myRef.child(mContext.getString(R.string.dbname_user_account))
                 .child(userID)
                 .setValue(userAccount);
+
+    }
+
+
+    public UserCombine getUserCombine(DataSnapshot dataSnapshot){
+
+        Log.d(TAG, "getUserAccount: getting user_acount info from database");
+
+        User user = new User();
+        UserAccount account = new UserAccount();
+
+
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+            //get user_account info from database
+            if(ds.getKey().equals(mContext.getString(R.string.dbname_user_account))){
+                Log.d(TAG, "getUserAccount: datasnapshop: " + ds);
+
+                try{
+                    account.setDescription(ds.child(userID).getValue(UserAccount.class).getDescription());
+                    account.setFollowers(ds.child(userID).getValue(UserAccount.class).getFollowers());
+                    account.setFollowing(ds.child(userID).getValue(UserAccount.class).getFollowing());
+                    account.setPosts(ds.child(userID).getValue(UserAccount.class).getPosts());
+                    account.setProfile_image(ds.child(userID).getValue(UserAccount.class).getProfile_image());
+                    account.setUsername(ds.child(userID).getValue(UserAccount.class).getUsername());
+                    account.setPetname(ds.child(userID).getValue(UserAccount.class).getPetname());
+
+                }catch (NullPointerException ex){
+                    Log.e(TAG, "getUserAccount: NullPointerException " + ex.getMessage() );
+                }
+                Log.d(TAG, "getUserAccount: get user_account info: " + account.toString());
+            }
+
+            //get users info from database
+            if(ds.getKey().equals(mContext.getString(R.string.dbname_users))){
+                Log.d(TAG, "getUserAccount: datasnapshop: " + ds);
+
+                try{
+                    user.setEmail(ds.child(userID).getValue(User.class).getEmail());
+                    user.setUsername(ds.child(userID).getValue(User.class).getUsername());
+                    user.setUser_id(ds.child(userID).getValue(User.class).getUser_id());
+
+
+                }catch (NullPointerException ex){
+                    Log.e(TAG, "getUserAccount: NullPointerException " + ex.getMessage() );
+                }
+                Log.d(TAG, "getUserAccount: get user info: " + user.toString());
+            }
+        }
+
+        return new UserCombine(user,account);
 
     }
 

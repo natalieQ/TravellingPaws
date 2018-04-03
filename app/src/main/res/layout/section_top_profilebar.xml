@@ -22,7 +22,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:layout_marginStart="14dp"
-                    android:id="@+id/profileNameTextView"/>
+                    android:id="@+id/profilebar_username"/>
                 
                 <ImageView
                     android:layout_width="25dp"

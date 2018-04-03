@@ -8,15 +8,17 @@ public class UserAccount {
     private long posts;
     private String profile_image;
     private String username;
+    private String petname;
 
     public UserAccount(String description, long followers, long following,
-                               long posts, String profile_image, String username) {
+                               long posts, String profile_image, String username, String petname) {
         this.description = description;
         this.followers = followers;
         this.following = following;
         this.posts = posts;
         this.profile_image = profile_image;
         this.username = username;
+        this.petname = petname;
     }
     public UserAccount() {
 
@@ -26,7 +28,7 @@ public class UserAccount {
         return description;
     }
 
-    public void setDscription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -70,17 +72,25 @@ public class UserAccount {
         this.username = username;
     }
 
+    public String getPetname() {
+        return petname;
+    }
+
+    public void setPetname(String petname) {
+        this.petname = petname;
+    }
 
 
     @Override
     public String toString() {
-        return "UserAccountSettings{" +
+        return "UserAccount{" +
                 "description='" + description + '\'' +
-                               ", followers=" + followers +
+                ", followers=" + followers +
                 ", following=" + following +
                 ", posts=" + posts +
                 ", profile_image='" + profile_image + '\'' +
                 ", username='" + username + '\'' +
+                ", petname='" + petname + '\'' +
                 '}';
     }
 }
