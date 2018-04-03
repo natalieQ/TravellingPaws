@@ -3,6 +3,7 @@
 
     <string name="edit_profile">Edit Profile</string>
     <string name="sign_out">Sign Out</string>
+    <string name="profile_fragment">Profile</string>
 
     <!-- Firebase messages -->
     <string name="auth_failed">Authenticate Failed</string>

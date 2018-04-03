@@ -6,21 +6,11 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <!--top profile bar-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:id="@+id/relLayoutTopProfileBar">
-
-            <include layout="@layout/section_top_profilebar"/>
-
-        </RelativeLayout>
 
         <!--middle section-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relLayoutTopProfileBar"
             android:id="@+id/relLayoutMidProfile"
             android:background="@drawable/navbar_bottom">
 
