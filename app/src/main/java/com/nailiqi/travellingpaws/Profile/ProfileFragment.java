@@ -83,6 +83,18 @@ public class ProfileFragment extends Fragment{
         setupBottomNavbar();
         setupFirebaseAuth();
 
+        //setup edit profile button
+        TextView btnEditProfile = (TextView) view.findViewById(R.id.tvEditProfile);
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: go to edit profile fragment");
+                Intent intent = new Intent(getActivity(), AccountSettingActivity.class);
+                intent.putExtra(getString(R.string.calling_activity), getString(R.string.profile_activity));
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 

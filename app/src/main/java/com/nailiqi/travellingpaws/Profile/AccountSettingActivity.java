@@ -1,6 +1,7 @@
 package com.nailiqi.travellingpaws.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -47,6 +48,7 @@ public class AccountSettingActivity extends AppCompatActivity{
         setupBottomNavbar();
         setupBackArrow();
         setupFragments();
+        getIncomingIntent();
     }
 
     /**
@@ -57,8 +59,8 @@ public class AccountSettingActivity extends AppCompatActivity{
 
         //options of text strings
         List<String> options = new ArrayList<>();
-        options.add(getString(R.string.edit_profile));
-        options.add(getString(R.string.sign_out));
+        options.add(getString(R.string.edit_profile_fragment));
+        options.add(getString(R.string.sign_out_fragment));
 
         ArrayAdapter adapter = new ArrayAdapter(AccountSettingActivity.this, android.R.layout.simple_list_item_1, options);
         listView.setAdapter(adapter);
@@ -78,8 +80,8 @@ public class AccountSettingActivity extends AppCompatActivity{
      */
     private void setupFragments(){
         partStatePagerAdapter = new PartStatePagerAdapter(getSupportFragmentManager());
-        partStatePagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.edit_profile));
-        partStatePagerAdapter.addFragment(new SignOutFragment(), getString(R.string.sign_out));
+        partStatePagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.edit_profile_fragment));
+        partStatePagerAdapter.addFragment(new SignOutFragment(), getString(R.string.sign_out_fragment));
     }
 
     /**
@@ -123,5 +125,17 @@ public class AccountSettingActivity extends AppCompatActivity{
                 finish();
             }
         });
+    }
+
+    /**
+     * get imcoming Intent
+     */
+    private void getIncomingIntent(){
+        Intent intent = getIntent();
+        if(intent.hasExtra(getString(R.string.calling_activity))){
+
+            //nagivate to edit_profile fragment under AccountSetting Activity
+            setupViewpager(partStatePagerAdapter.getFragmentNum(getString(R.string.edit_profile_fragment)));
+        }
     }
 }
