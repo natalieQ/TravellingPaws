@@ -55,18 +55,8 @@ public class ProfileActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-//
 
-//
-//    /**
-//     * set up profile image
-//     */
-//    private void setupProfileImage(){
-//        String imgUrl = "http://www.worldclassbichons.com/uploads/3/4/6/0/34608590/edited/img-2647_1.jpeg";
-//        ImageLoaderHelper.setImage(imgUrl, profileImage, progressBar, "");
-//
-//    }
-//
+
 //    private void tempImages(){
 //        List<String> imgUrls = new ArrayList<>();
 //

@@ -24,22 +24,29 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.Signin.SigninActivity;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
 import com.nailiqi.travellingpaws.Utils.FirebaseMethods;
+import com.nailiqi.travellingpaws.Utils.ImageGridViewAdapter;
 import com.nailiqi.travellingpaws.Utils.ImageLoaderHelper;
+import com.nailiqi.travellingpaws.models.Photo;
 import com.nailiqi.travellingpaws.models.User;
 import com.nailiqi.travellingpaws.models.UserAccount;
 import com.nailiqi.travellingpaws.models.UserCombine;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment{
     private static final String TAG = "ProfileFragment";
     private static final int ACTIVITY_NUM = 4;
+    private static int Grid_COL_NUM = 3;
     private Context context;
 
     private ProgressBar mProgressBar;
@@ -82,6 +89,7 @@ public class ProfileFragment extends Fragment{
         setupTopToolbar();
         setupBottomNavbar();
         setupFirebaseAuth();
+        setupGridView();
 
         //setup edit profile button
         TextView btnEditProfile = (TextView) view.findViewById(R.id.tvEditProfile);
@@ -118,6 +126,48 @@ public class ProfileFragment extends Fragment{
         mFollowing.setText(String.valueOf(account.getFollowing()));
         mProfilebarUsername.setText(account.getUsername());
 
+    }
+
+    /**
+     * set up photo gridview
+     */
+    private void setupGridView(){
+        Log.d(TAG, "setupGridView: Setting up user image grid.");
+
+        final List<Photo> photos = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference
+                .child(getString(R.string.dbname_user_photos))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        //single event listner
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+
+                    //add to photo list
+                    photos.add(singleSnapshot.getValue(Photo.class));
+                }
+                //setup our image grid
+                int gridWidth = getResources().getDisplayMetrics().widthPixels;
+                int imageWidth = gridWidth/Grid_COL_NUM;
+                gridView.setColumnWidth(imageWidth);
+
+                List<String> imgUrls = new ArrayList<String>();
+                for(int i = 0; i < photos.size(); i++){
+                    imgUrls.add(photos.get(i).getImg_path());
+                }
+                ImageGridViewAdapter adapter = new ImageGridViewAdapter(getActivity(),R.layout.section_grid_imageview,
+                        "", imgUrls);
+                gridView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: cancelled.");
+            }
+        });
     }
 
     /**
