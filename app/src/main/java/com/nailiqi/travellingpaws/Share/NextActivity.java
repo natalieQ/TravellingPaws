@@ -1,12 +1,19 @@
 package com.nailiqi.travellingpaws.Share;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,10 +39,26 @@ public class NextActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     private FirebaseMethods firebaseMethods;
 
+    //GPS
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    private double longitude;
+    private double latitue;
+
+    private EditText mCaption;
+
+    private int imgCount = 0;
+    private String imgUrl;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
+
+        firebaseMethods = new FirebaseMethods(NextActivity.this);
+
+        mCaption = (EditText) findViewById(R.id.nextDescription);
 
         Log.d(TAG, "onCreate: image selected is " + getIntent().getStringExtra(getString(R.string.selected_image)));
 
@@ -59,6 +82,8 @@ public class NextActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: photo shared");
 
                 //upload image to database
+                String caption = mCaption.getText().toString();
+                firebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imgCount, imgUrl);
 
             }
         });
@@ -67,11 +92,12 @@ public class NextActivity extends AppCompatActivity {
 
     }
 
+
     private void setupWidgets(){
         Intent intent = new Intent();
         ImageView image = (ImageView) findViewById(R.id.shareImage);
-        ImageLoaderHelper.setImage(getIntent().getStringExtra(getString(R.string.selected_image)), image, null, append);
-
+        imgUrl = getIntent().getStringExtra(getString(R.string.selected_image));
+        ImageLoaderHelper.setImage(imgUrl, image, null, append);
     }
 
     /**
@@ -105,6 +131,8 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                imgCount = firebaseMethods.getImageCount(dataSnapshot);
+                Log.d(TAG, "onDataChange: image count: " + imgCount);
             }
 
             @Override

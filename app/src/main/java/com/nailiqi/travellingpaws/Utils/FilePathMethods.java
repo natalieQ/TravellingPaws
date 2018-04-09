@@ -13,6 +13,7 @@ public class FilePathMethods {
 
     public String PICTURES = ROOT + "/Pictures";
     public String CAMERA = ROOT + "/DCIM/camera";
+    public String FIREBASE_STORAGE_PHOTOS = "photos/users";
 
     public static List<String> getDirectoryPaths(String dir){
         ArrayList<String> dirPaths = new ArrayList<>();
