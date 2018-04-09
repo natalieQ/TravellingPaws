@@ -1,6 +1,9 @@
 package com.nailiqi.travellingpaws.models;
 
-public class Photo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Photo implements Parcelable {
 
     private String photo_id;
     private String user_id;
@@ -91,5 +94,15 @@ public class Photo {
                 ", gps_longitude='" + gps_longitude + '\'' +
                 ", gps_latitude='" + gps_latitude + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -45,6 +46,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment{
     private static final String TAG = "ProfileFragment";
+
+    public interface OnGridImageSelectedListener{
+        void onGridImageSelected(Photo photo, int activityNumber);
+    }
+    OnGridImageSelectedListener onGridImageSelectedListener;
+
     private static final int ACTIVITY_NUM = 4;
     private static int Grid_COL_NUM = 3;
     private Context context;
@@ -106,6 +113,16 @@ public class ProfileFragment extends Fragment{
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        try{
+            onGridImageSelectedListener = (OnGridImageSelectedListener) getActivity();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+        super.onAttach(context);
+    }
+
     /**
      * setup widgets
      */
@@ -161,6 +178,14 @@ public class ProfileFragment extends Fragment{
                 ImageGridViewAdapter adapter = new ImageGridViewAdapter(getActivity(),R.layout.section_grid_imageview,
                         "", imgUrls);
                 gridView.setAdapter(adapter);
+
+                //ad grid image selected listner to the grid
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        onGridImageSelectedListener.onGridImageSelected(photos.get(position), ACTIVITY_NUM);
+                    }
+                });
             }
 
             @Override

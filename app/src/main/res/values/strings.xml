@@ -4,6 +4,8 @@
     <string name="edit_profile_fragment">Edit Profile</string>
     <string name="sign_out_fragment">Sign Out</string>
     <string name="profile_fragment">Profile</string>
+    <string name="viewpost_fragment">ViewPostFragment</string>
+
 
     <!-- Firebase messages -->
     <string name="auth_failed">Authenticate Failed</string>
@@ -21,5 +23,7 @@
     <string name="profile_activity">Profile Activity</string>
     <string name="selected_image">selected_image</string>
     <string name="selected_bitmap">selected_bitmap</string>
+    <string name="photo">photo</string>
+    <string name="activity_number">activity_number</string>
 
 </resources>

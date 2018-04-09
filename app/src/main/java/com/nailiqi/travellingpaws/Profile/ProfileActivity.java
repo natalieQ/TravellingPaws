@@ -20,11 +20,13 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
 import com.nailiqi.travellingpaws.Utils.ImageLoaderHelper;
+import com.nailiqi.travellingpaws.Utils.ViewPostFragment;
+import com.nailiqi.travellingpaws.models.Photo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements ProfileFragment.OnGridImageSelectedListener{
     private static final String TAG = "ProfileActivity";
     private static int ACTIVITY_NUM = 4;
     private Context context = ProfileActivity.this;
@@ -53,6 +55,26 @@ public class ProfileActivity extends AppCompatActivity {
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(getString(R.string.profile_fragment));
         transaction.commit();
+    }
+
+    @Override
+    public void onGridImageSelected(Photo photo, int activityNumber) {
+
+        Log.d(TAG, "onGridImageSelected: get an image from gridview: " + photo.toString());
+
+        ViewPostFragment fragment = new ViewPostFragment();
+        Bundle args = new Bundle();
+        //attach data bundle
+        args.putParcelable(getString(R.string.photo), photo);
+        args.putInt(getString(R.string.activity_number), activityNumber);
+        fragment.setArguments(args);
+
+        FragmentTransaction transaction  = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        //add to back stack
+        transaction.addToBackStack(getString(R.string.viewpost_fragment));
+        transaction.commit();
+
     }
 
 
