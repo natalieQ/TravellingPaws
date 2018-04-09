@@ -2,6 +2,7 @@ package com.nailiqi.travellingpaws.Share;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -57,6 +58,19 @@ public class PhotoFragment extends Fragment{
 
         if(requestCode == CAMERA_REQUEST_CODE ){
             Log.d(TAG, "onActivityResult: a photo is taken");
+
+            Bitmap bitmap;
+            //get bitmap from camera
+            bitmap = (Bitmap) data.getExtras().get("data");
+
+            try{
+                Log.d(TAG, "onActivityResult: got new bitmap from camera: " + bitmap);
+                Intent intent = new Intent(getActivity(), NextActivity.class);
+                intent.putExtra(getString(R.string.selected_bitmap), bitmap);
+                startActivity(intent);
+            }catch (NullPointerException e){
+                Log.d(TAG, "onActivityResult: NullPointerException: " + e.getMessage());
+            }
         }
     }
 

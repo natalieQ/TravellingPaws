@@ -16,7 +16,7 @@ public class FilePathMethods {
     public String FIREBASE_STORAGE_PHOTOS = "photos/users";
 
     public static List<String> getDirectoryPaths(String dir){
-        ArrayList<String> dirPaths = new ArrayList<>();
+        List<String> dirPaths = new ArrayList<>();
         File file = new File(dir);
         File[] listfiles = file.listFiles();
 
@@ -28,9 +28,9 @@ public class FilePathMethods {
         return dirPaths;
     }
 
-    public static List<String> getFilePaths(String directory){
-        ArrayList<String> filePaths = new ArrayList<>();
-        File file = new File(directory);
+    public static List<String> getFilePaths(String dir){
+        List<String> filePaths = new ArrayList<>();
+        File file = new File(dir);
         File[] listfiles = file.listFiles();
 
         for(int i = 0; i < listfiles.length; i++){

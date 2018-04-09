@@ -1,6 +1,7 @@
 package com.nailiqi.travellingpaws.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nailiqi.travellingpaws.Home.MainActivity;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.models.Photo;
 import com.nailiqi.travellingpaws.models.User;
@@ -235,7 +237,7 @@ public class FirebaseMethods {
 
     }
 
-    public void uploadNewPhoto (String photoType, final String caption, int imgCount, String imgUrl){
+    public void uploadNewPhoto (String photoType, final String caption, int imgCount, String imgUrl, Bitmap bitmap){
 
         FilePathMethods filePaths = new FilePathMethods();
         //add new photo
@@ -247,7 +249,9 @@ public class FirebaseMethods {
                     .child(filePaths.FIREBASE_STORAGE_PHOTOS + "/" + user_id + "/photo" + (imgCount + 1));
 
             //convert image url to bitmap
-            Bitmap bitmap = ImageHelper.toBitmap(imgUrl);
+            if(bitmap == null){
+                bitmap = ImageHelper.toBitmap(imgUrl);
+            }
             //convert bitmap to byte, default quality set to 100
             byte[] bytes = ImageHelper.toBytes(bitmap, 100);
 
@@ -267,6 +271,8 @@ public class FirebaseMethods {
                     uploadPhotoToDatabase(caption, firebaseUrl.toString());
 
                     //navigate to home activity
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    mContext.startActivity(intent);
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

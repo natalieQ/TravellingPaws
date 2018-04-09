@@ -3,6 +3,7 @@ package com.nailiqi.travellingpaws.Share;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -49,6 +50,8 @@ public class NextActivity extends AppCompatActivity {
 
     private int imgCount = 0;
     private String imgUrl;
+    private Bitmap bitmap;
+    private Intent intent;
 
 
     @Override
@@ -83,7 +86,17 @@ public class NextActivity extends AppCompatActivity {
 
                 //upload image to database
                 String caption = mCaption.getText().toString();
-                firebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imgCount, imgUrl);
+
+                //from library
+                if(intent.hasExtra(getString(R.string.selected_image))){
+                    imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+                    firebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imgCount, imgUrl,null);
+                }
+                //from camera
+                else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+                    bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
+                    firebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imgCount, null,bitmap);
+                }
 
             }
         });
@@ -94,10 +107,21 @@ public class NextActivity extends AppCompatActivity {
 
 
     private void setupWidgets(){
-        Intent intent = new Intent();
+        intent = getIntent();  //not new intent
         ImageView image = (ImageView) findViewById(R.id.shareImage);
-        imgUrl = getIntent().getStringExtra(getString(R.string.selected_image));
-        ImageLoaderHelper.setImage(imgUrl, image, null, append);
+
+        //from library
+        if(intent.hasExtra(getString(R.string.selected_image))){
+            imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+            Log.d(TAG, "setupWidgets: got new image url: " + imgUrl);
+            ImageLoaderHelper.setImage(imgUrl, image, null, append);
+        }
+        //from camera
+        else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+            bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
+            Log.d(TAG, "setupWidgets: got new bitmap");
+            image.setImageBitmap(bitmap);
+        }
     }
 
     /**
