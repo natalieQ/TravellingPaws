@@ -1,6 +1,7 @@
 package com.nailiqi.travellingpaws.Share;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,11 +35,12 @@ public class LibraryFragment extends Fragment{
     private static String append = "file:/";
 
     private GridView gridView;
-    private ImageView selectedImage;
+    private ImageView previewImage;
     private Spinner spinner;
 
     private List<String> fileDirs;
     private FilePathMethods filePathMethods;
+    private String selectedImage;
 
     @Nullable
     @Override
@@ -46,7 +48,7 @@ public class LibraryFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_library, container, false);
 
         gridView = (GridView) view.findViewById(R.id.gridview);
-        selectedImage = (ImageView) view.findViewById(R.id.libraryImageView);
+        previewImage = (ImageView) view.findViewById(R.id.libraryImageView);
         spinner = (Spinner) view.findViewById(R.id.spinnerShare);
         fileDirs = new ArrayList<>();
         filePathMethods = new FilePathMethods();
@@ -68,6 +70,10 @@ public class LibraryFragment extends Fragment{
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to next share.");
 
+                Intent intent = new Intent(getActivity(), NextActivity.class);
+                intent.putExtra(getString(R.string.selected_image), selectedImage);
+                startActivity(intent);
+
             }
         });
 
@@ -79,8 +85,8 @@ public class LibraryFragment extends Fragment{
     private void setupWidgets(){
 
         //check folders indide "/storage/emulated/0/pictures"
-        if(filePathMethods.getDirectoryPaths(filePathMethods.PICTURES) != null){
-            fileDirs = filePathMethods.getDirectoryPaths(filePathMethods.PICTURES);
+        if(FilePathMethods.getDirectoryPaths(filePathMethods.PICTURES) != null){
+            fileDirs = FilePathMethods.getDirectoryPaths(filePathMethods.PICTURES);
         }
 
         fileDirs.add(filePathMethods.CAMERA);
@@ -109,7 +115,7 @@ public class LibraryFragment extends Fragment{
     }
 
     private void setupGridview(String selectedDirectory){
-        final List<String> imgUrls = filePathMethods.getFilePaths(selectedDirectory);
+        final List<String> imgUrls = FilePathMethods.getFilePaths(selectedDirectory);
 
         int gridWidth = getResources().getDisplayMetrics().widthPixels;
         int imageWidth = gridWidth/Grid_COL_NUM;
@@ -120,14 +126,16 @@ public class LibraryFragment extends Fragment{
         gridView.setAdapter(adapter);
 
         //set the default image to show when the fragment is inflated
-        setImage(imgUrls.get(0), selectedImage, append);
+        setImage(imgUrls.get(0), previewImage, append);
+        selectedImage = imgUrls.get(0);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: selected an image: " + imgUrls.get(position));
 
-                setImage(imgUrls.get(position), selectedImage, append);
+                setImage(imgUrls.get(position), previewImage, append);
+                selectedImage = imgUrls.get(position);
             }
         });
     }

@@ -13,5 +13,6 @@
 
     <string name="calling_activity">calling_activity</string>
     <string name="profile_activity">Profile Activity</string>
+    <string name="selected_image">selected_image</string>
 
 </resources>

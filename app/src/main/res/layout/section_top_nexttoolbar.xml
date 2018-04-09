@@ -1,0 +1,58 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/navbar_bottom">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileToolBar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--cancel-->
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/goback"
+                    android:src="@drawable/ic_backarrow"/>
+
+                <TextView
+                    android:layout_toRightOf="@+id/goback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Go Back"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/tvGoBack"/>
+
+
+                <!--Share-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Share"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/tvShare"/>
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+</merge>

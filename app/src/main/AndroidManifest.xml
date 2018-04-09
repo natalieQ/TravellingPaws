@@ -28,6 +28,7 @@
         <activity android:name=".Profile.AccountSettingActivity"></activity>
         <activity android:name=".Signin.SigninActivity"></activity>
         <activity android:name=".Signin.RegisterActivity"></activity>
+        <activity android:name=".Share.NextActivity"></activity>
     </application>
 
 </manifest>
