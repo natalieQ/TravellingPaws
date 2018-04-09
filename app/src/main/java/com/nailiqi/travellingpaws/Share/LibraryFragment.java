@@ -1,6 +1,7 @@
 package com.nailiqi.travellingpaws.Share;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,12 +20,18 @@ import android.widget.TextView;
 
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.Utils.FilePathMethods;
+import com.nailiqi.travellingpaws.Utils.ImageGridViewAdapter;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryFragment extends Fragment{
     private static final String TAG = "LibraryFragment";
+    private static int Grid_COL_NUM = 4;
+    private static String append = "file:/";
 
     private GridView gridView;
     private ImageView selectedImage;
@@ -89,7 +96,8 @@ public class LibraryFragment extends Fragment{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: selected: " + fileDirs.get(position));
 
-                //setup our image grid for the directory chosen
+                //setup grid view
+                setupGridview(fileDirs.get(position));
             }
 
             @Override
@@ -98,6 +106,53 @@ public class LibraryFragment extends Fragment{
             }
         });
 
+    }
 
+    private void setupGridview(String selectedDirectory){
+        final List<String> imgUrls = filePathMethods.getFilePaths(selectedDirectory);
+
+        int gridWidth = getResources().getDisplayMetrics().widthPixels;
+        int imageWidth = gridWidth/Grid_COL_NUM;
+        gridView.setColumnWidth(imageWidth);
+
+        //use grid adapter
+        ImageGridViewAdapter adapter = new ImageGridViewAdapter(getActivity(), R.layout.section_grid_imageview, append, imgUrls);
+        gridView.setAdapter(adapter);
+
+        //set the default image to show when the fragment is inflated
+        setImage(imgUrls.get(0), selectedImage, append);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick: selected an image: " + imgUrls.get(position));
+
+                setImage(imgUrls.get(position), selectedImage, append);
+            }
+        });
+    }
+
+    private void setImage(String imgURL, ImageView image, String append){
+        Log.d(TAG, "setImage: setting image");
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
+        imageLoader.displayImage(append + imgURL, image, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+            }
+        });
     }
 }

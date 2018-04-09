@@ -1,4 +1,4 @@
-package com.nailiqi.travellingpaws.Profile;
+package com.nailiqi.travellingpaws.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
