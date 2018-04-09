@@ -55,6 +55,7 @@ public class AccountSettingActivity extends AppCompatActivity{
      * set up account setting options
      */
     private void setupAccountSettingList(){
+        //listview for fragments live in de AccountActivity
         ListView listView = (ListView) findViewById(R.id.listviewAccountSettings);
 
         //options of text strings
@@ -62,6 +63,7 @@ public class AccountSettingActivity extends AppCompatActivity{
         options.add(getString(R.string.edit_profile_fragment));
         options.add(getString(R.string.sign_out_fragment));
 
+        //array adapter to render arraylist to listView
         ArrayAdapter adapter = new ArrayAdapter(AccountSettingActivity.this, android.R.layout.simple_list_item_1, options);
         listView.setAdapter(adapter);
 

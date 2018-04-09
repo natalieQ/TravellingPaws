@@ -8,34 +8,34 @@
     <include layout="@layout/layout_middle_viewpager"/>
 
     <RelativeLayout
+        android:id="@+id/relLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/relLayout1">
+        android:layout_height="match_parent">
 
         <!--top tool bar-->
         <RelativeLayout
+            android:id="@+id/relLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/relLayout2">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/section_top_accounttoolbar"/>
+            <include layout="@layout/section_top_accounttoolbar" />
 
         </RelativeLayout>
 
         <!--middle section-->
         <RelativeLayout
+            android:id="@+id/relLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/relLayout3"
             android:layout_below="@+id/relLayout2"
             android:layout_marginBottom="48dp">
 
-            <include layout="@layout/layout_middle_account"/>
+            <include layout="@layout/layout_middle_account" />
 
         </RelativeLayout>
 
         <!--bottom navbar-->
-        <include layout="@layout/layout_bottom_navigation"/>
+        <include layout="@layout/layout_bottom_navigation" />
 
     </RelativeLayout>
 

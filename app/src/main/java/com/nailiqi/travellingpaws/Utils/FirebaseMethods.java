@@ -165,4 +165,17 @@ public class FirebaseMethods {
 
     }
 
+    public void updateUsername(String username){
+        //udpate users
+        myRef.child(mContext.getString(R.string.dbname_users))
+                .child(userID)
+                .child("username")
+                .setValue(username);
+        //udpate user_account
+        myRef.child(mContext.getString(R.string.dbname_user_account))
+                .child(userID)
+                .child("username")
+                .setValue(username);
+    }
+
 }

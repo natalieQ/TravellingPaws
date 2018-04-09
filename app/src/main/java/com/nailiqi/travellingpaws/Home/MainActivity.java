@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
+        menuItem.setChecked(true); //mark current tab checked
     }
 
     private void initImageLoader(){

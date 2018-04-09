@@ -41,14 +41,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         setupFragments();
 
-
-//        setupTopToolbar();
-//
-//        setupProfileImage();
-//
-//        tempImages();
     }
 
+    //inflate the profile_fragment
     private void setupFragments(){
         Log.d(TAG, "setupFragments: inflating " + getString(R.string.profile_fragment));
 
