@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/relLayout1">
 
+        <include layout="@layout/section_top_librarytoolbar"/>
+
     </RelativeLayout>
 
     <LinearLayout
