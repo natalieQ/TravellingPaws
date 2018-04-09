@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--top toolbar-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relLayout1">
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/relLayout1"
+        android:weightSum="100">
+
+        <!--selected image view-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="60">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/libraryImageView"
+                android:scaleType="centerCrop"/>
+
+        </RelativeLayout>
+
+        <!--image gridview-->
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="40"
+            android:id="@+id/gridView"
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
+            android:layout_marginTop="1dp"
+            android:numColumns="4"
+            android:stretchMode="none"
+            android:gravity="center"
+            >
+
+        </GridView>
+
+    </LinearLayout>
+
+</RelativeLayout>
