@@ -178,4 +178,27 @@ public class FirebaseMethods {
                 .setValue(username);
     }
 
+    public void updateUserAccount(String petname, String description){
+
+        Log.d(TAG, "updateUserAccount: updating user account info");
+
+        //udpate petname
+        if(petname != null){
+            myRef.child(mContext.getString(R.string.dbname_user_account))
+                    .child(userID)
+                    .child("petname")
+                    .setValue(petname);
+        }
+
+        //udpate description
+        if(description != null){
+            myRef.child(mContext.getString(R.string.dbname_user_account))
+                    .child(userID)
+                    .child("description")
+                    .setValue(description);
+        }
+
+        
+    }
+
 }

@@ -112,8 +112,8 @@ public class EditProfileFragment extends Fragment{
      */
     private void updateProfile(){
         final String newUsername = username.getText().toString();
-        String newPetname = petname.getText().toString();
-        String newDescription = description.getText().toString();
+        final String newPetname = petname.getText().toString();
+        final String newDescription = description.getText().toString();
 
         //listener to single change
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -121,10 +121,23 @@ public class EditProfileFragment extends Fragment{
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Log.d(TAG, "onDataChange: cur username is: " + mUserCombine.getUser().getUsername());
-                if(!mUserCombine.getUser().getUsername().equals(newUsername)){ //user change the username
+
+                //user changed username
+                if(!mUserCombine.getUser().getUsername().equals(newUsername)){
                     isUsernameExist(newUsername);
 
                 }
+                //user changed petname
+                if(!mUserCombine.getUserAccount().getPetname().equals(newPetname)){
+                    firebaseMethods.updateUserAccount(newPetname, null);
+                    Toast.makeText(getActivity(), "petname updated", Toast.LENGTH_SHORT).show();
+                }
+                //user changed description
+                if(!mUserCombine.getUserAccount().getDescription().equals(newDescription)){
+                    firebaseMethods.updateUserAccount(null, newDescription);
+                    Toast.makeText(getActivity(), "description updated", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
