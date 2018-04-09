@@ -54,6 +54,10 @@ public class ShareActivity extends AppCompatActivity {
 
     }
 
+    public int getCurTabNum(){
+        return viewPager.getCurrentItem();
+    }
+
     public boolean checkPermissionArray(String[] permissions){
         Log.d(TAG, "checkPermissionArray: check permission array");
 
