@@ -2,6 +2,7 @@ package com.nailiqi.travellingpaws.models;
 
 public class UserAccount {
 
+    private String user_id;
     private String description;
     private long followers;
     private long following;
@@ -10,8 +11,9 @@ public class UserAccount {
     private String username;
     private String petname;
 
-    public UserAccount(String description, long followers, long following,
-                               long posts, String profile_image, String username, String petname) {
+
+    public UserAccount(String user_id, String description, long followers, long following, long posts, String profile_image, String username, String petname) {
+        this.user_id = user_id;
         this.description = description;
         this.followers = followers;
         this.following = following;
@@ -20,8 +22,17 @@ public class UserAccount {
         this.username = username;
         this.petname = petname;
     }
+
     public UserAccount() {
 
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getDescription() {
