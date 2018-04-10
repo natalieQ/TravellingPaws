@@ -126,8 +126,12 @@ public class LibraryFragment extends Fragment{
         gridView.setAdapter(adapter);
 
         //set the default image to show when the fragment is inflated
-        setImage(imgUrls.get(0), previewImage, append);
-        selectedImage = imgUrls.get(0);
+        try{
+            setImage(imgUrls.get(0), previewImage, append);
+            selectedImage = imgUrls.get(0);
+        }catch (ArrayIndexOutOfBoundsException e){
+            Log.e(TAG, "setupGridView: ArrayIndexOutOfBoundsException: " +e.getMessage() );
+        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

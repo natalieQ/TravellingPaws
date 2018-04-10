@@ -34,13 +34,16 @@ import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
 import com.nailiqi.travellingpaws.Utils.FirebaseMethods;
 import com.nailiqi.travellingpaws.Utils.ImageGridViewAdapter;
 import com.nailiqi.travellingpaws.Utils.ImageLoaderHelper;
+import com.nailiqi.travellingpaws.models.Like;
 import com.nailiqi.travellingpaws.models.Photo;
 import com.nailiqi.travellingpaws.models.User;
 import com.nailiqi.travellingpaws.models.UserAccount;
 import com.nailiqi.travellingpaws.models.UserCombine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -164,7 +167,29 @@ public class ProfileFragment extends Fragment{
                 for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
 
                     //add to photo list
-                    photos.add(singleSnapshot.getValue(Photo.class));
+//                    photos.add(singleSnapshot.getValue(Photo.class));
+
+                    //convert to hashmap for firebase
+                    Photo photo = new Photo();
+                    Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
+
+                    photo.setCaption(objectMap.get("caption").toString());
+                    photo.setPhoto_id(objectMap.get("photo_id").toString());
+                    photo.setUser_id(objectMap.get("user_id").toString());
+                    photo.setData_created(objectMap.get("data_created").toString());
+                    photo.setImg_path(objectMap.get("img_path").toString());
+                    photo.setGps_longitude(objectMap.get("gps_longitude").toString());
+                    photo.setGps_longitude(objectMap.get("gps_latitude").toString());
+
+                    List<Like> likelist = new ArrayList<Like>();
+                    for (DataSnapshot dSnapshot : singleSnapshot
+                            .child("likes").getChildren()){
+                        Like like = new Like();
+                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
+                        likelist.add(like);
+                    }
+                    photo.setLikes(likelist);
+                    photos.add(photo);
                 }
                 //setup our image grid
                 int gridWidth = getResources().getDisplayMetrics().widthPixels;
