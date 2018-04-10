@@ -25,5 +25,6 @@
     <string name="selected_bitmap">selected_bitmap</string>
     <string name="photo">photo</string>
     <string name="activity_number">activity_number</string>
+    <string name="intent_user">intent_user</string>
 
 </resources>

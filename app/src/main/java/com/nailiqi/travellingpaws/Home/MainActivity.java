@@ -2,8 +2,10 @@ package com.nailiqi.travellingpaws.Home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nailiqi.travellingpaws.R;
+import com.nailiqi.travellingpaws.Share.ShareActivity;
 import com.nailiqi.travellingpaws.Signin.SigninActivity;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
 import com.nailiqi.travellingpaws.Utils.ImageLoaderHelper;
@@ -26,16 +29,22 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int ACTIVITY_NUM = 0;
     private Context context = MainActivity.this;
+    private static final int REQUEST_CODE = 0;  //camera fragment
 
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private ViewPager viewPager;
+    TabLayout tabLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        viewPager = (ViewPager) findViewById(R.id.containerViewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         //initialize firebase auth
         setupFirebaseAuth();
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupBottomNavbar();
         setupViewPager();
+
 
         //mAuth.signOut();
     }
@@ -115,10 +125,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new HomeFragment());
         adapter.addFragment(new LocationFragment());
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.containerViewpager);
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
         //set tab icon
@@ -130,7 +138,50 @@ public class MainActivity extends AppCompatActivity {
         logoTab.setCustomView(R.layout.customtab);
 
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_loc_tab);
+
+        //default set to tab 1 - homefeed
+        viewPager.setCurrentItem(1);
     }
+
+    public int getCurTabNum(){
+        return viewPager.getCurrentItem();
+    }
+
+    public boolean checkPermissionArray(String[] permissions){
+        Log.d(TAG, "checkPermissionArray: check permission array");
+
+        for(int i = 0; i< permissions.length; i++){
+            if(!checkPermissions(permissions[i])){
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    public void verifyPermissions(String[] permissions){
+        ActivityCompat.requestPermissions(
+                MainActivity.this,
+                permissions,
+                REQUEST_CODE
+        );
+    }
+
+    public boolean checkPermissions(String permission){
+        Log.d(TAG, "checkPermissions: checking permission: " + permission);
+
+        int request = ActivityCompat.checkSelfPermission(MainActivity.this, permission);
+
+        if(request != PackageManager.PERMISSION_GRANTED){
+            Log.d(TAG, "checkPermissions: Permission was not granted for: " + permission);
+            return false;
+        }
+        else{
+            Log.d(TAG, "checkPermissions: Permission was granted for: " + permission);
+            return true;
+        }
+    }
+
 
     /**
      * Bottom navbar setup

@@ -112,6 +112,16 @@ public class ViewPostFragment extends Fragment{
         setupFirebaseAuth();;
         setupBottomNavbar();
 
+        //setup goback button
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //finish current activity going back to pre activity
+                getActivity().finish();
+            }
+        });
+
         return view;
     }
 

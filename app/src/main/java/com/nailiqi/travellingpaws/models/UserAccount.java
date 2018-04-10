@@ -1,6 +1,9 @@
 package com.nailiqi.travellingpaws.models;
 
-public class UserAccount {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserAccount implements Parcelable{
 
     private String user_id;
     private String description;
@@ -103,5 +106,15 @@ public class UserAccount {
                 ", username='" + username + '\'' +
                 ", petname='" + petname + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }
