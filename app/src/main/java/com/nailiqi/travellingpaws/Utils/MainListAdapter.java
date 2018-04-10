@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nailiqi.travellingpaws.Home.MainActivity;
-import com.nailiqi.travellingpaws.Profile.ProfileActivity;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.models.Like;
 import com.nailiqi.travellingpaws.models.Photo;
@@ -41,6 +39,11 @@ import java.util.TimeZone;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainListAdapter extends ArrayAdapter<Photo> {
+
+    public interface OnLoadMoreItemsListener{
+        void onLoadMoreItems();
+    }
+    OnLoadMoreItemsListener mOnLoadMoreItemsListener;
 
     private static final String TAG = "MainListAdapter";
 
@@ -127,24 +130,26 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
 
 
         //set the time created
-        String timestampDifference = getTimePosted(getItem(position));
-        if(!timestampDifference.equals("0")){
-            holder.timeCreated.setText(timestampDifference + " DAYS AGO");
+        String diff = getTimePosted(getItem(position));
+        if(!diff.equals("0")){
+            holder.timeCreated.setText(diff + " DAYS AGO");
         }else{
             holder.timeCreated.setText("TODAY");
         }
 
-        //set the profile image
+        //set the post image
         final ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(getItem(position).getImg_path(), holder.mprofileImage);
+        imageLoader.displayImage(getItem(position).getImg_path(), holder.postImage);
 
 
         //query profile image and username who made the post
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
         Query query = reference
                 .child(context.getString(R.string.dbname_user_account))
                 .orderByChild("user_id")
                 .equalTo(getItem(position).getUser_id());
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -173,6 +178,7 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
                 .child(context.getString(R.string.dbname_users))
                 .orderByChild("user_id")
                 .equalTo(getItem(position).getUser_id());
+
         userQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -191,9 +197,9 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
             }
         });
 
-//        if(reachedEndOfList(position)){
-//            loadMoreData();
-//        }
+        if(reachedEnd(position)){
+            loadMoreData();
+        }
 
         return convertView;
     }
@@ -461,6 +467,25 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
 
             }
         });
+    }
+
+    private boolean reachedEnd(int position){
+        return position == getCount() - 1;
+    }
+
+    private void loadMoreData(){
+
+        try{
+            mOnLoadMoreItemsListener = (OnLoadMoreItemsListener) getContext();
+        }catch (ClassCastException e){
+            Log.e(TAG, "loadMoreData: ClassCastException: " +e.getMessage() );
+        }
+
+        try{
+            mOnLoadMoreItemsListener.onLoadMoreItems();
+        }catch (NullPointerException e){
+            Log.e(TAG, "loadMoreData: ClassCastException: " +e.getMessage() );
+        }
     }
 
 

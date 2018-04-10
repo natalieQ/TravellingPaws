@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,10 +24,11 @@ import com.nailiqi.travellingpaws.Share.ShareActivity;
 import com.nailiqi.travellingpaws.Signin.SigninActivity;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
 import com.nailiqi.travellingpaws.Utils.ImageLoaderHelper;
+import com.nailiqi.travellingpaws.Utils.MainListAdapter;
 import com.nailiqi.travellingpaws.Utils.PartPagerAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainListAdapter.OnLoadMoreItemsListener{
 
     private static final String TAG = "MainActivity";
     private static final int ACTIVITY_NUM = 0;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ViewPager viewPager;
-    TabLayout tabLayout;
+    private TabLayout tabLayout;
 
 
     @Override
@@ -103,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
         FirebaseUser user = mAuth.getCurrentUser();
+
+        //default set to tab 1 - homefeed
+        viewPager.setCurrentItem(1);
+
         checkCurrentUser(user);
     }
 
@@ -113,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
 
     /**
      * Middle view pager setup + top tabs
@@ -139,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_loc_tab);
 
-        //default set to tab 1 - homefeed
-        viewPager.setCurrentItem(1);
     }
 
     public int getCurTabNum(){
@@ -202,5 +209,15 @@ public class MainActivity extends AppCompatActivity {
     private void initImageLoader(){
         ImageLoaderHelper imageLoaderHelper = new ImageLoaderHelper(context);
         ImageLoader.getInstance().init(imageLoaderHelper.getConfig());
+    }
+
+    @Override
+    public void onLoadMoreItems() {
+        Log.d(TAG, "onLoadMoreItems: displaying more photos");
+        HomeFragment fragment = (HomeFragment)getSupportFragmentManager()
+                .findFragmentByTag("android:switcher:" + R.id.containerViewpager + ":" + viewPager.getCurrentItem());
+        if(fragment != null){
+            fragment.displayMorePhotos();
+        }
     }
 }
