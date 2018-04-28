@@ -46,11 +46,11 @@ public class BottomNavbarHelper {
                         Intent intentShare = new Intent(context, ShareActivity.class);
                         context.startActivity(intentShare);
                         break;
-
-                    case R.id.ic_favorite:
-                        Intent intentFav = new Intent(context, FavActivity.class);
-                        context.startActivity(intentFav);
-                        break;
+                        //favorite feature not implemented yet
+//                    case R.id.ic_favorite:
+//                        Intent intentFav = new Intent(context, FavActivity.class);
+//                        context.startActivity(intentFav);
+//                        break;
 
                     case R.id.ic_profile:
                         Intent intentProfile = new Intent(context, ProfileActivity.class);

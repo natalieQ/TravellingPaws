@@ -129,8 +129,8 @@ public class LibraryFragment extends Fragment{
         try{
             setImage(imgUrls.get(0), previewImage, append);
             selectedImage = imgUrls.get(0);
-        }catch (ArrayIndexOutOfBoundsException e){
-            Log.e(TAG, "setupGridView: ArrayIndexOutOfBoundsException: " +e.getMessage() );
+        }catch (Exception e){
+            Log.e(TAG, "setupGridView: Exception: " +e.getMessage() );
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

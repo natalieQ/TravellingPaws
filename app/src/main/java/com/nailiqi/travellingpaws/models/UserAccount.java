@@ -30,6 +30,29 @@ public class UserAccount implements Parcelable{
 
     }
 
+    protected UserAccount(Parcel in) {
+        user_id = in.readString();
+        description = in.readString();
+        followers = in.readLong();
+        following = in.readLong();
+        posts = in.readLong();
+        profile_image = in.readString();
+        username = in.readString();
+        petname = in.readString();
+    }
+
+    public static final Creator<UserAccount> CREATOR = new Creator<UserAccount>() {
+        @Override
+        public UserAccount createFromParcel(Parcel in) {
+            return new UserAccount(in);
+        }
+
+        @Override
+        public UserAccount[] newArray(int size) {
+            return new UserAccount[size];
+        }
+    };
+
     public String getUser_id() {
         return user_id;
     }
@@ -116,5 +139,16 @@ public class UserAccount implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+        dest.writeString(user_id);
+        dest.writeString(description);
+        dest.writeLong(followers);
+        dest.writeLong(following);
+        dest.writeLong(posts);
+        dest.writeString(profile_image);
+        dest.writeString(username);
+        dest.writeString(petname);
+
     }
+
+
 }

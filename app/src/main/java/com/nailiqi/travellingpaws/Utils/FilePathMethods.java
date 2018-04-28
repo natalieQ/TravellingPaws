@@ -20,11 +20,14 @@ public class FilePathMethods {
         File file = new File(dir);
         File[] listfiles = file.listFiles();
 
-        for(int i = 0; i < listfiles.length; i++){
-            if(listfiles[i].isDirectory()){
-                dirPaths.add(listfiles[i].getAbsolutePath());
+        if(listfiles != null){
+            for(int i = 0; i < listfiles.length; i++){
+                if(listfiles[i].isDirectory()){
+                    dirPaths.add(listfiles[i].getAbsolutePath());
+                }
             }
         }
+
         return dirPaths;
     }
 
@@ -33,11 +36,14 @@ public class FilePathMethods {
         File file = new File(dir);
         File[] listfiles = file.listFiles();
 
-        for(int i = 0; i < listfiles.length; i++){
-            if(listfiles[i].isFile()){
-                filePaths.add(listfiles[i].getAbsolutePath());
+        if(listfiles != null) {
+            for(int i = 0; i < listfiles.length; i++){
+                if(listfiles[i].isFile()){
+                    filePaths.add(listfiles[i].getAbsolutePath());
+                }
             }
         }
+
         return filePaths;
     }
 }

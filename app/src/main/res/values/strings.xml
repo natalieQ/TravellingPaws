@@ -27,4 +27,6 @@
     <string name="activity_number">activity_number</string>
     <string name="intent_user">intent_user</string>
 
+    <!--google map api key-->
+    <string name="google_map_API_key">AIzaSyBLZiqHdnRHwEvUF7nz-FVuXPlp2YDOgvY</string>
 </resources>
