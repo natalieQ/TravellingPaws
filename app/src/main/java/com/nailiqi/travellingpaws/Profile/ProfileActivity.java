@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileFragment.OnGridImageSelectedListener{
     private static final String TAG = "ProfileActivity";
-    private static int ACTIVITY_NUM = 4;
+    private static int ACTIVITY_NUM = 3;
     private Context context = ProfileActivity.this;
     private static int Grid_COL_NUM = 3;
 

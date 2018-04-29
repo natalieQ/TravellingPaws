@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment{
     }
     OnGridImageSelectedListener onGridImageSelectedListener;
 
-    private static final int ACTIVITY_NUM = 4;
+    private static final int ACTIVITY_NUM = 3;
     private static int Grid_COL_NUM = 3;
     private Context context;
 

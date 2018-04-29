@@ -10,9 +10,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import static com.google.android.gms.internal.zzt.TAG;
+import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
-public class ImageHelper {
+public class
+ImageHelper {
 
     public static Bitmap toBitmap(String imgUrl){
         File imageFile = new File(imgUrl);

@@ -35,15 +35,15 @@ dependencies {
     //image loader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //firebase
-//    compile 'com.google.firebase:firebase-core:12.0.1'
+//    compile 'com.google.firebase:firebase-core:10.2.6'
     //firebase authentication
-    compile 'com.google.firebase:firebase-auth:10.2.6'
+    compile 'com.google.firebase:firebase-auth:11.6.0'
     //firebase database
-    compile 'com.google.firebase:firebase-database:10.2.6'
+    compile 'com.google.firebase:firebase-database:11.6.0'
     //firebase storage
-    compile 'com.google.firebase:firebase-storage:10.2.6'
+    compile 'com.google.firebase:firebase-storage:11.6.0'
     //goolge map services
-    compile 'com.google.android.gms:play-services:10.2.6'
+    compile 'com.google.android.gms:play-services:11.6.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

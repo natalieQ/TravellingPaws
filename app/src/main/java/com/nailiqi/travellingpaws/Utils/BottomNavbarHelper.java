@@ -33,17 +33,17 @@ public class BottomNavbarHelper {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.ic_home:
-                        Intent intentHome = new Intent(context, MainActivity.class);
+                        Intent intentHome = new Intent(context, MainActivity.class);   //ACTIVITY_NUM = 0
                         context.startActivity(intentHome);
                         break;
 
                     case R.id.ic_paw:
-                        Intent intentMap = new Intent(context, MapActivity.class);
+                        Intent intentMap = new Intent(context, MapActivity.class);     //ACTIVITY_NUM = 1
                         context.startActivity(intentMap);
                         break;
 
                     case R.id.ic_camera:
-                        Intent intentShare = new Intent(context, ShareActivity.class);
+                        Intent intentShare = new Intent(context, ShareActivity.class);  //ACTIVITY_NUM = 2
                         context.startActivity(intentShare);
                         break;
                         //favorite feature not implemented yet
@@ -53,7 +53,7 @@ public class BottomNavbarHelper {
 //                        break;
 
                     case R.id.ic_profile:
-                        Intent intentProfile = new Intent(context, ProfileActivity.class);
+                        Intent intentProfile = new Intent(context, ProfileActivity.class);   //ACTIVITY_NUM = 3
                         context.startActivity(intentProfile);
                         break;
                 }

@@ -29,7 +29,7 @@ import java.util.List;
 public class AccountSettingActivity extends AppCompatActivity{
 
     private static final String TAG = "AccountSettingActivity";
-    private static final int ACTIVITY_NUM = 4;
+    private static final int ACTIVITY_NUM = 3;
     private Context context = AccountSettingActivity.this;
     private PartStatePagerAdapter partStatePagerAdapter;
     private ViewPager viewPager;
