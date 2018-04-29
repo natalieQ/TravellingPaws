@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location Fragment"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:textSize="18sp"/>
+    <!--google map fragment-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
+
+        <!--get current location icon-->
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/relLayout1"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/ic_gps"
+            android:src="@drawable/ic_gps"/>
+
+        <!--search location bar-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/blue_border"
+            android:id="@+id/relLayout1">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/ic_search"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_search"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/ic_search"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:id="@+id/et_search"
+                android:background="@null"
+                android:hint="Enter Address, City or Zip Code"
+                android:imeOptions="actionSearch"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
 
 </RelativeLayout>
