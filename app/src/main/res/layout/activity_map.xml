@@ -18,6 +18,19 @@
             tools:context=".MapsActivity"
             android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+        <!--get current location icon-->
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/relLayout1"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/ic_gps"
+            android:src="@drawable/ic_gps"/>
+
+        <!--search location bar-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
