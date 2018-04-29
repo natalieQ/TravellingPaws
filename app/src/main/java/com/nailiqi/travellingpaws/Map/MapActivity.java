@@ -2,7 +2,10 @@ package com.nailiqi.travellingpaws.Map;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,8 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,8 +35,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.nailiqi.travellingpaws.Home.MainActivity;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -48,6 +60,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 return;
             }
             mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
+            setupWidgets();
 
         }
     }
@@ -57,6 +72,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 10;
     private static final float DEFAULT_ZOOM = 15f;
+    private Context mContext = MapActivity.this;
 
     //permissions
     private static final String FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -66,17 +82,68 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private FusedLocationProviderClient mLocationProviderClient;
 
+    private EditText mSearchText;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Log.d(TAG, "onCreate: starting");
+        mSearchText = (EditText) findViewById(R.id.et_search);
 
         setupBottomNavbar();
 
         if(checkServices()){
             getLocationPermission();
+        }
+    }
+
+    /**
+     * set up widgets
+     */
+    private void setupWidgets(){
+        Log.d(TAG, "setupWidgets: ");
+
+        //overwrite enter click
+        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE
+                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
+
+                    //search location
+                    searchLocation();
+                }
+
+                return false;
+            }
+        });
+
+    }
+
+    /**
+     * get location based on search
+     */
+    private void searchLocation(){
+        Log.d(TAG, "searchLocation: ");
+
+        String searchString = mSearchText.getText().toString();
+
+        Geocoder geocoder = new Geocoder(mContext);
+        List<Address> list = new ArrayList<>();
+        try{
+            list = geocoder.getFromLocationName(searchString, 1);
+        }catch (IOException e){
+            Log.e(TAG, "searchLocation: IOException: " + e.getMessage() );
+        }
+
+        if(list.size() > 0){
+            Address address = list.get(0);
+
+            Log.d(TAG, "searchLocation: location is: " + address.toString());
+            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -103,7 +170,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         } else {
                             Log.d(TAG, "onComplete: current location not found");
-                            Toast.makeText(MapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -217,7 +284,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //helper function to set up nav bar
         BottomNavbarHelper.setupBottomNavbar(bottomNavigationViewEx);
         //helper function to enable navigation
-        BottomNavbarHelper.enableNavigation(MapActivity.this, bottomNavigationViewEx );
+        BottomNavbarHelper.enableNavigation(mContext, bottomNavigationViewEx );
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
