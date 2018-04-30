@@ -49,7 +49,8 @@ public class FirebaseMethods {
     private DatabaseReference myRef;
     private StorageReference mStorageReference;
     private String userID;
-
+    private double photo_latitude = 0;
+    private double photo_longitude = 0;
 
     private Context mContext;
     private double mPhotoUploadProgress = 0;
@@ -238,9 +239,14 @@ public class FirebaseMethods {
 
     }
 
-    public void uploadNewPhoto (String photoType, final String caption, int imgCount, String imgUrl, Bitmap bitmap){
+    public void uploadNewPhoto (String photoType, final String caption, int imgCount, String imgUrl, Bitmap bitmap, double[]latlng){
 
         FilePathMethods filePaths = new FilePathMethods();
+
+        //set current location
+        photo_latitude = latlng[0];
+        photo_longitude = latlng[1];
+
         //add new photo
         if(photoType.equals(mContext.getString(R.string.new_photo))){
             Log.d(TAG, "uploadNewPhoto: uploading new photo.");
@@ -314,6 +320,8 @@ public class FirebaseMethods {
         photo.setImg_path(url);
         photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         photo.setPhoto_id(newPhotoID);
+        photo.setGps_latitude(photo_latitude);
+        photo.setGps_longitude(photo_longitude);
 
         //set gps -- to be implemented
 

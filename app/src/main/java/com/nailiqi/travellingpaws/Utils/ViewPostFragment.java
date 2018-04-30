@@ -1,5 +1,6 @@
 package com.nailiqi.travellingpaws.Utils;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.nailiqi.travellingpaws.Map.MapActivity;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.models.Like;
 import com.nailiqi.travellingpaws.models.Photo;
@@ -62,7 +64,7 @@ public class ViewPostFragment extends Fragment{
     private ImageViewSquare mPostImage;
     private BottomNavigationViewEx bottomNavigationViewEx;
     private TextView mCaption, mUsername, mTimePosted,userLikes;
-    private ImageView goback, profileMenu, hollowHeart, solidHeart, mProfileImage;
+    private ImageView goback, profileMenu, hollowHeart, solidHeart, mProfileImage, paw;
 
     private Photo mPhoto;
     private int mActivityNumber = 0;
@@ -89,6 +91,7 @@ public class ViewPostFragment extends Fragment{
         hollowHeart = (ImageView) view.findViewById(R.id.image_heart);
         solidHeart = (ImageView) view.findViewById(R.id.image_heart_solid);
         userLikes = (TextView) view.findViewById(R.id.image_likes);
+        paw = (ImageView) view.findViewById(R.id.image_paw);
 
         //toggle likes
         hollowHeart.setVisibility(View.VISIBLE);
@@ -118,6 +121,43 @@ public class ViewPostFragment extends Fragment{
 
                 //finish current activity going back to pre activity
                 getActivity().finish();
+            }
+        });
+
+        //set go to location link
+        paw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //get location from database
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+            //query gps location from photos node
+            Query query = reference
+                    .child(getString(R.string.dbname_photos))
+                    .child(mPhoto.getPhoto_id());
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    Log.d(TAG, "onDataChange: DataSnapshot: " + dataSnapshot);
+
+                    double lat = dataSnapshot.child("gps_latitude").getValue(Double.class);
+                    double lng = dataSnapshot.child("gps_longitude").getValue(Double.class);
+
+                    Log.d(TAG, "onClick: go to map activity");
+                    Intent intent = new Intent(getActivity(), MapActivity.class);
+                    intent.putExtra("photo_latitude", lat);
+                    intent.putExtra("photo_longitude", lng);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             }
         });
 
