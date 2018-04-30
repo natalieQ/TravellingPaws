@@ -449,24 +449,30 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
     private void getCurUsername(){
         Log.d(TAG, "getCurUsername: get user account");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query = reference
-                .child(context.getString(R.string.dbname_users))
-                .orderByChild("user_id")
-                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-                    currentUsername = singleSnapshot.getValue(UserAccount.class).getUsername();
+        try{
+            Query query = reference
+                    .child(context.getString(R.string.dbname_users))
+                    .orderByChild("user_id")
+                    .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                        currentUsername = singleSnapshot.getValue(UserAccount.class).getUsername();
+                    }
+
                 }
 
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                }
+            });
 
-            }
-        });
+        } catch (Exception e) {
+            Log.e(TAG, "getCurUsername: " + e.getMessage() );
+        }
+
     }
 
     private boolean reachedEnd(int position){

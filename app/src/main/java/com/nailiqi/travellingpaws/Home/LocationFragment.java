@@ -53,7 +53,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: showing map now");
         mMap = googleMap;
-        Toast.makeText(getActivity(), "Showing Where You Are Now!", Toast.LENGTH_SHORT).show();
 
         if(mLocationPermissionGranted) {
             getDeviceLocation();
@@ -75,6 +74,8 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback{
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 10;
     private static final float DEFAULT_ZOOM = 15f;
+    private static final double DEFAULT_LAT = 42.349634;
+    private static final double DEFAULT_LNG = -71.099688;
 
     //permissions
     private static final String FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -186,7 +187,13 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback{
                             Log.d(TAG, "onComplete: current location found");
 
                             Location curLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(curLocation.getLatitude(), curLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+                            if(curLocation == null){
+                                //set default gps for emulator
+                                moveCamera(new LatLng(DEFAULT_LAT, DEFAULT_LNG), DEFAULT_ZOOM, "My Location");
+                            } else {
+                                moveCamera(new LatLng(curLocation.getLatitude(), curLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+                            }
+
 
                         } else {
                             Log.d(TAG, "onComplete: current location not found");
@@ -207,7 +214,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback{
      * move camera
      */
     private void moveCamera(LatLng latLng, float zoom, String title) {
-        Log.d(TAG, "moveCamera: moving camera to: ");
+        Log.d(TAG, "moveCamera: moving camera to lat: " + latLng.latitude + " lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
         //drop marker

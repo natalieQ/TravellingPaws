@@ -41,12 +41,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.nailiqi.travellingpaws.Home.MainActivity;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.Utils.BottomNavbarHelper;
-import com.nailiqi.travellingpaws.Utils.ImageViewSquare;
+
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +79,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 10;
     private static final float DEFAULT_ZOOM = 15f;
+    private static final double DEFAULT_LAT = 42.349634;
+    private static final double DEFAULT_LNG = -71.099688;
     private Context mContext = MapActivity.this;
 
     //permissions
@@ -178,6 +180,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         try{
             if(mLocationPermissionGranted) {
+                Log.d(TAG, "getDeviceLocation: permission granted");
                 Task location = mLocationProviderClient.getLastLocation();
 
                 location.addOnCompleteListener(new OnCompleteListener() {
@@ -186,8 +189,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         if(task.isSuccessful()) {
                             Log.d(TAG, "onComplete: current location found");
 
+                            Log.d(TAG, "onComplete: task result is: " + task.getResult());
                             Location curLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(curLocation.getLatitude(), curLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+                            if(curLocation == null){
+                                //set default gps for emulator
+                                moveCamera(new LatLng(DEFAULT_LAT, DEFAULT_LNG), DEFAULT_ZOOM, "My Location");
+                            } else {
+                                moveCamera(new LatLng(curLocation.getLatitude(), curLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+                            }
+
 
                         } else {
                             Log.d(TAG, "onComplete: current location not found");
@@ -208,7 +218,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
      * move camera
      */
     private void moveCamera(LatLng latLng, float zoom, String title) {
-        Log.d(TAG, "moveCamera: moving camera to: ");
+        Log.d(TAG, "moveCamera: moving camera to lat: " + latLng.latitude + " lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
         //drop marker

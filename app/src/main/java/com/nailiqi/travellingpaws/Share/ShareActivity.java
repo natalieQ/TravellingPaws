@@ -34,6 +34,7 @@ public class ShareActivity extends AppCompatActivity {
             setupViewPager();
         } else {
             verifyPermissions(Permissions.PERMISSIONS);
+            setupViewPager();
         }
 
 //        setupBottomNavbar();

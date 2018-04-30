@@ -34,16 +34,17 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.2.0'
     //image loader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //goolge map services
+    compile 'com.google.android.gms:play-services:11.4.0'
     //firebase
 //    compile 'com.google.firebase:firebase-core:10.2.6'
     //firebase authentication
-    compile 'com.google.firebase:firebase-auth:11.6.0'
+    compile 'com.google.firebase:firebase-auth:11.4.0'
     //firebase database
-    compile 'com.google.firebase:firebase-database:11.6.0'
+    compile 'com.google.firebase:firebase-database:11.4.0'
     //firebase storage
-    compile 'com.google.firebase:firebase-storage:11.6.0'
-    //goolge map services
-    compile 'com.google.android.gms:play-services:11.6.0'
+    compile 'com.google.firebase:firebase-storage:11.4.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
