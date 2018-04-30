@@ -19,8 +19,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nailiqi.travellingpaws.Map.MapActivity;
 import com.nailiqi.travellingpaws.R;
 import com.nailiqi.travellingpaws.models.Like;
 import com.nailiqi.travellingpaws.models.Photo;
@@ -34,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,8 +71,8 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
         CircleImageView mprofileImage;
         ImageViewSquare postImage;
         String userLikes;
-        TextView username, timeCreated, caption, likes, comments;
-        ImageView solidHeart, hollowHeart, comment;
+        TextView username, timeCreated, caption, likes;
+        ImageView solidHeart, hollowHeart, paw;
 
         UserAccount userAccount = new UserAccount();
         User user  = new User();
@@ -82,7 +85,7 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
 
         final ViewHolder holder;
 
@@ -100,11 +103,10 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
             //like and comment imageview
             holder.solidHeart = (ImageView) convertView.findViewById(R.id.image_heart_solid);
             holder.hollowHeart = (ImageView) convertView.findViewById(R.id.image_heart);
-            holder.comment = (ImageView) convertView.findViewById(R.id.image_comment);
+            holder.paw = (ImageView) convertView.findViewById(R.id.image_paw);
 
             //textview
             holder.likes = (TextView) convertView.findViewById(R.id.image_likes);
-            holder.comments = (TextView) convertView.findViewById(R.id.image_comments_link);
             holder.caption = (TextView) convertView.findViewById(R.id.image_caption);
             holder.timeCreated = (TextView) convertView.findViewById(R.id.image_time_posted);
 
@@ -127,6 +129,44 @@ public class MainListAdapter extends ArrayAdapter<Photo> {
 
         //set the caption
         holder.caption.setText(getItem(position).getCaption());
+
+        //set go to location link
+        holder.paw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //get location from database
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+                //query gps location from photos node
+                Query query = reference
+                        .child(context.getString(R.string.dbname_photos))
+                        .child(holder.photo.getPhoto_id());
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Log.d(TAG, "onDataChange: DataSnapshot: " + dataSnapshot);
+
+                        double lat = dataSnapshot.child("gps_latitude").getValue(Double.class);
+                        double lng = dataSnapshot.child("gps_longitude").getValue(Double.class);
+
+                        Log.d(TAG, "onClick: go to map activity");
+                        Intent intent = new Intent(parent.getContext(), MapActivity.class);
+                        intent.putExtra("photo_latitude", lat);
+                        intent.putExtra("photo_longitude", lng);
+                        context.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
 
 
         //set the time created

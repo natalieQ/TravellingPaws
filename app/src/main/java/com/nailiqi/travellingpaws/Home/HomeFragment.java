@@ -72,8 +72,8 @@ public class HomeFragment extends Fragment{
                     photo.setUser_id(objectMap.get("user_id").toString());
                     photo.setData_created(objectMap.get("data_created").toString());
                     photo.setImg_path(objectMap.get("img_path").toString());
-                    photo.setGps_longitude(objectMap.get("gps_longitude").toString());
-                    photo.setGps_longitude(objectMap.get("gps_latitude").toString());
+                    photo.setGps_longitude(Double.parseDouble(objectMap.get("gps_longitude").toString()));
+                    photo.setGps_longitude(Double.parseDouble(objectMap.get("gps_latitude").toString()));
 
 
                     photoList.add(photo);

@@ -38,8 +38,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"
                     android:id="@+id/username"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
 
 
                 <!--<ImageView-->
@@ -94,6 +93,28 @@
                         android:visibility="visible"/>
 
                 </RelativeLayout>
+
+                <!--location-->
+                <TextView
+                    android:id="@+id/tv_loc"
+                    android:layout_width="65dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="18dp"
+                    android:text="Goto Photo Location"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/image_paw"
+                android:layout_toLeftOf="@+id/tv_loc"
+                android:layout_marginRight="4dp"
+                android:src="@drawable/ic_paw_blue"
+                android:layout_centerVertical="true"/>
 
                 <!--comment not implemented-->
                 <!--<ImageView-->

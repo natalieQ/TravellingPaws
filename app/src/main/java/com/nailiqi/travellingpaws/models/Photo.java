@@ -12,8 +12,8 @@ public class Photo implements Parcelable {
     private String caption;
     private String data_created;
     private String img_path;
-    private String gps_longitude;
-    private String gps_latitude;
+    private double gps_longitude;
+    private double gps_latitude;
     private List<Like> likes;
 
 
@@ -21,7 +21,7 @@ public class Photo implements Parcelable {
 
     }
 
-    public Photo(String photo_id, String user_id, String caption, String data_created, String img_path, String gps_longitude, String gps_latitude, List<Like> likes) {
+    public Photo(String photo_id, String user_id, String caption, String data_created, String img_path, double gps_longitude, double gps_latitude, List<Like> likes) {
         this.photo_id = photo_id;
         this.user_id = user_id;
         this.caption = caption;
@@ -31,6 +31,39 @@ public class Photo implements Parcelable {
         this.gps_latitude = gps_latitude;
         this.likes = likes;
     }
+
+    protected Photo(Parcel in) {
+        caption = in.readString();
+        data_created = in.readString();
+        img_path = in.readString();
+        photo_id = in.readString();
+        user_id = in.readString();
+        gps_longitude = in.readDouble();
+        gps_latitude = in.readDouble();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(caption);
+        dest.writeString(data_created);
+        dest.writeString(img_path);
+        dest.writeString(photo_id);
+        dest.writeString(user_id);
+        dest.writeDouble(gps_longitude);
+        dest.writeDouble(gps_latitude);
+    }
+
+    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+        @Override
+        public Photo createFromParcel(Parcel in) {
+            return new Photo(in);
+        }
+
+        @Override
+        public Photo[] newArray(int size) {
+            return new Photo[size];
+        }
+    };
 
     public String getPhoto_id() {
         return photo_id;
@@ -72,19 +105,19 @@ public class Photo implements Parcelable {
         this.img_path = img_path;
     }
 
-    public String getGps_longitude() {
+    public double getGps_longitude() {
         return gps_longitude;
     }
 
-    public void setGps_longitude(String gps_longitude) {
+    public void setGps_longitude(double gps_longitude) {
         this.gps_longitude = gps_longitude;
     }
 
-    public String getGps_latitude() {
+    public double getGps_latitude() {
         return gps_latitude;
     }
 
-    public void setGps_latitude(String gps_latitude) {
+    public void setGps_latitude(double gps_latitude) {
         this.gps_latitude = gps_latitude;
     }
 
@@ -115,8 +148,5 @@ public class Photo implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
 
-    }
 }

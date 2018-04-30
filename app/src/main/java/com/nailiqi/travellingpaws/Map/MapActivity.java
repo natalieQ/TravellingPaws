@@ -3,6 +3,7 @@ package com.nailiqi.travellingpaws.Map;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -59,7 +60,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Toast.makeText(this, "Showing Where You Are Now!", Toast.LENGTH_SHORT).show();
 
         if(mLocationPermissionGranted) {
-            getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
@@ -70,6 +70,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
             setupWidgets();
+
+            //check intent
+            Intent intent = getIntent();
+            if(intent.hasExtra("photo_latitude")){
+
+                Bundle bundle = intent.getExtras();
+
+                if(bundle!=null)
+                {
+                    double photo_latitude =(double) bundle.get("photo_latitude");
+                    double photo_longitude =(double) bundle.get("photo_longitude");
+
+                    //move camera
+                    moveCamera(new LatLng(photo_latitude, photo_longitude), DEFAULT_ZOOM, "This is where the photo is taken!");
+                    Toast.makeText(this, "This is where the photo is taken!", Toast.LENGTH_SHORT).show();
+
+                }
+            } else {
+                getDeviceLocation();
+            }
 
         }
     }
@@ -315,6 +335,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Toast.makeText(this, "Unable to make map request", Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+
+    /**
+     * get imcoming Intent
+     */
+    private void getIncomingIntent(){
+        Intent intent = getIntent();
+        if(intent.hasExtra("photo_latitude")){
+
+            Bundle bundle = intent.getExtras();
+
+            if(bundle!=null)
+            {
+                double photo_latitude =(double) bundle.get("photo_latitude");
+                double photo_longitude =(double) bundle.get("photo_longitude");
+
+                //move camera
+                moveCamera(new LatLng(photo_latitude, photo_longitude), DEFAULT_ZOOM, "This is where the photo is taken!");
+
+            }
+        }
     }
 
     /**

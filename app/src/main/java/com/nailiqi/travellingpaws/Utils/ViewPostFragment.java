@@ -62,7 +62,7 @@ public class ViewPostFragment extends Fragment{
     private ImageViewSquare mPostImage;
     private BottomNavigationViewEx bottomNavigationViewEx;
     private TextView mCaption, mUsername, mTimePosted,userLikes;
-    private ImageView goback, profileMenu, hollowHeart, solidHeart,  comment, mProfileImage;
+    private ImageView goback, profileMenu, hollowHeart, solidHeart, mProfileImage;
 
     private Photo mPhoto;
     private int mActivityNumber = 0;
@@ -88,7 +88,6 @@ public class ViewPostFragment extends Fragment{
         profileMenu = (ImageView) view.findViewById(R.id.profileMenu);
         hollowHeart = (ImageView) view.findViewById(R.id.image_heart);
         solidHeart = (ImageView) view.findViewById(R.id.image_heart_solid);
-        comment = (ImageView) view.findViewById(R.id.image_comment);
         userLikes = (TextView) view.findViewById(R.id.image_likes);
 
         //toggle likes
