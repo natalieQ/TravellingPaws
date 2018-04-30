@@ -95,15 +95,16 @@
 
                 </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:id="@+id/image_comment"
-                    android:layout_toRightOf="@+id/heartLayout"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_comment_blue"
-                    android:visibility="visible"
-                    android:layout_centerVertical="true"/>
+                <!--comment not implemented-->
+                <!--<ImageView-->
+                    <!--android:layout_width="35dp"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:id="@+id/image_comment"-->
+                    <!--android:layout_toRightOf="@+id/heartLayout"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:src="@drawable/ic_comment_blue"-->
+                    <!--android:visibility="visible"-->
+                    <!--android:layout_centerVertical="true"/>-->
 
             </RelativeLayout>
 
@@ -135,15 +136,16 @@
                     android:layout_below="@+id/image_likes"
                     android:layout_marginTop="15dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="View all 2 comments"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp"
-                    android:layout_below="@+id/image_caption"
-                    android:id="@+id/image_comments_link"
-                    android:layout_marginTop="15dp"/>
+                <!--comment not implemented-->
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="View all 2 comments"-->
+                    <!--android:textColor="@color/grey"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:layout_below="@+id/image_caption"-->
+                    <!--android:id="@+id/image_comments_link"-->
+                    <!--android:layout_marginTop="15dp"/>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,7 +153,7 @@
                     android:text="3 DAYS AGO"
                     android:textColor="@color/grey"
                     android:textSize="14sp"
-                    android:layout_below="@+id/image_comments_link"
+                    android:layout_below="@+id/image_caption"
                     android:id="@+id/image_time_posted"
                     android:layout_marginTop="15dp"/>
 
