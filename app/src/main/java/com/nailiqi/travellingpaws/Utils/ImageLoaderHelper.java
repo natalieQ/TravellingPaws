@@ -2,6 +2,7 @@ package com.nailiqi.travellingpaws.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -15,6 +16,8 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
 public class ImageLoaderHelper {
 
@@ -47,34 +50,40 @@ public class ImageLoaderHelper {
     public static void setImage(String imgURL, ImageView image, final ProgressBar progressBar, String append){
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(append + imgURL, image, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                if(progressBar!= null){
-                    progressBar.setVisibility(View.VISIBLE);
+        try{
+            imageLoader.displayImage(append + imgURL, image, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                    if(progressBar!= null){
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
 
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                if(progressBar != null){
-                    progressBar.setVisibility(View.GONE);
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    if(progressBar != null){
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
 
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if(progressBar != null){
-                    progressBar.setVisibility(View.GONE);
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    if(progressBar != null){
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
 
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                if(progressBar != null){
-                    progressBar.setVisibility(View.GONE);
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+                    if(progressBar != null){
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
+
+        } catch (Exception e){
+            Log.e(TAG, "setImage: " + e.getMessage() );
+        }
+
     }
 }
